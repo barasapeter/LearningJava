@@ -28,32 +28,64 @@ public class GuessTheNumber {
         } while (!difficultyChoice.equals("1") &&
                 !difficultyChoice.equals("2") &&
                 !difficultyChoice.equals("3"));
-
-        int rangeEasy = 10;
-        int rangeMedium = 50;
-        int rangeHard = 100;
+        ;
 
         int rangeOfChoice = 0;
+        int maxAttempts = 0;
 
         switch (difficultyChoice) {
             case "1":
-                rangeOfChoice = rangeEasy;
+                rangeOfChoice = 10;
+                maxAttempts = 5;
                 break;
 
             case "2":
-                rangeOfChoice = rangeMedium;
+                rangeOfChoice = 50;
+                maxAttempts = 7;
                 break;
 
             case "3":
-                rangeOfChoice = rangeHard;
+                rangeOfChoice = 100;
+                maxAttempts = 10;
                 break;
         }
 
         int correctAnswer = randomGenerator.nextInt(rangeOfChoice + 1);
 
-        System.out.println("Your choice: " + rangeOfChoice);
+        int userGuess = 0;
 
-        System.out.println("Correct answer: " + correctAnswer);
+        String inputPrompt = "Enter a number between 0 and " + rangeOfChoice + ": ";
+
+        int i = 0;
+
+        while (true) {
+
+            if (i >= maxAttempts) {
+                System.out.println("Game Over! The number was " + correctAnswer + ".");
+                break;
+            }
+
+            System.out.print(inputPrompt);
+            userGuess = scanner.nextInt();
+
+            if (userGuess == correctAnswer) {
+                System.out.println("Correct! You win!");
+                break;
+            }
+
+            if (userGuess > correctAnswer) {
+                System.out.println("Too high! Try again.");
+            }
+
+            if (userGuess < correctAnswer) {
+                System.out.println("Too low! Try again.");
+            }
+
+            i++;
+
+            if ((maxAttempts - i) != 0)
+                System.out.println(maxAttempts - i + " attempts left");
+        }
 
         scanner.close();
     }
